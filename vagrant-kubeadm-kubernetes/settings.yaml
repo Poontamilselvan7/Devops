@@ -1,0 +1,53 @@
+---
+# cluster_name is used to group the nodes in a folder within VirtualBox:
+cluster_name: 
+  name: Kubernetes Cluster
+  groups: 
+    - "Master and Control Plane"
+    - "Worker Nodes"
+
+
+# Uncomment to set environment variables for services such as crio and kubelet.
+# For example, configure the cluster to pull images via a proxy.
+# environment: |
+#   HTTP_PROXY=http://my-proxy:8000
+#   HTTPS_PROXY=http://my-proxy:8000
+#   NO_PROXY=127.0.0.1,localhost,master-node,node01,node02,node03
+# All IPs/CIDRs should be private and allowed in /etc/vbox/networks.conf.
+network:
+  # Worker IPs are simply incremented from the control IP.
+  control_ip: 192.168.56.10
+  dns_servers:
+    - 8.8.8.8
+    - 1.1.1.1
+  pod_cidr: 172.16.1.0/16
+  service_cidr: 172.17.1.0/18
+nodes:
+  control:
+    cpu: 4
+    memory: 5130
+  workers:
+    count: 2
+    cpu: 2
+    memory: 3172
+# Mount additional shared folders from the host into each virtual machine.
+# Note that the project directory is automatically mounted at /vagrant.
+#  shared_folders:
+#    - host_path: ./config
+#      vm_path: /vagrant/configs
+#    - host_path: ./scripts
+#      vm_path: /vagrant/scripts
+
+software:
+  #box: bento/ubuntu-24.04
+  #box: hashicorp-education/ubuntu-24-04 
+  #box: ubuntu/focal64 
+  box: generic/debian12
+  calico: 3.26.0
+  # To skip the dashboard installation, set its version to an empty value or comment it out:
+  dashboard: 2.7.1
+  kubernetes: 1.31.5-*
+
+  #os: xUbuntu_24.04
+  os: debian_12
+  #os: ubuntu_20.04
